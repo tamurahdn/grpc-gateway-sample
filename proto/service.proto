@@ -1,0 +1,47 @@
+syntax = "proto3";
+package example;
+
+option go_package = "./pb";
+import "google/api/annotations.proto";
+
+service HelloWorldService {
+  rpc SayHello (HelloRequest) returns (HelloReply) {
+    option (google.api.http) = {
+      get: "/v1/example/sayhello/{name}"
+    };
+  }
+
+  rpc GetUser(GetUserRequest) returns (User) {
+    option (google.api.http) = {
+        get: "/v1/example/users/{id}"
+    };
+  }
+
+  rpc CreateUser(CreateUserRequest) returns (User) {
+      option (google.api.http) = {
+          post: "/v1/example/users"
+          body: "*"
+      };
+  }
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message CreateUserRequest {
+  string name = 1;
+}
+
+message User {
+  string id = 1;
+  string name = 2;
+}
